@@ -1,0 +1,32 @@
+ROUTINE EXERCICIO7
+EXERCICIOO7     ;
+    ;
+    W "=== MANIPULACAO DE STRINGS ===", !
+    ;
+    ;nome completo do usuário
+    R "Digite seu nome completo: ", nomeInput, !
+    ;
+    ; Se não digitar nada encerra para evitar erros
+    IF $Length(nomeInput) = 0 {
+        W "Nenhum nome foi digitado.", !
+        QUIT
+    }
+    ;
+    ;    Quantidade de caracteres (sem espaços)
+    S nomeSemEspacos = $Translate(nomeInput, " ", "")
+    S qtdCaracteres = $Length(nomeSemEspacos)
+    ;
+    ; 2.2 – Nome completo trocando os espaços por “|”
+    S nomeFormatado = $Translate(nomeInput, " ", "|")
+    ;
+    ;    Resultados
+    W !,"=========================================",!
+    W "              RESULTADOS                 ",!
+    W "=========================================",!
+    W "Nome original:  ", nomeInput, !
+    W "Qtd. caracteres (sem espacos): ", qtdCaracteres, !
+    W "Nome formatado com '|':  ", nomeFormatado, !
+    W "=========================================",!
+    ;
+    QUIT
+#; 
