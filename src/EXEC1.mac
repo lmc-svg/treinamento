@@ -1,0 +1,29 @@
+ROUTINE EXEC1
+EXEC1
+    ;Solicita a entrada dos dados
+    R "Digite o valor de X: ", x, !
+    R "Digite o valor de Y: ", y, !
+    ;
+    ; Validação - Deixa em ordem mesmo que X seja menor
+    IF x > y {
+        S temp = x
+        S x = y
+        S y = temp
+    }
+    ;
+    S quantMultiplos10 = 0
+    
+    W !!, "Numeros pares multiplos de 10 entre ", x, " e ", y, ":", !
+    
+    ; Loop para percorrer o intervalo de X até Y
+    FOR i = x:1:y {
+        ; Verifica se o resto da divisão por 10 é igual a 0
+        If (i # 10) = 0 {
+            W i, " "
+            S quantMultiplos10 = quantMultiplos10 + 1
+        }
+    }
+    
+    ; Exibe o resultado da contabilização
+    W !!, "Quantidade total de numeros encontrados: ", quantMultiplos10, !
+    QUIT

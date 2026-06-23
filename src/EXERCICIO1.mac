@@ -1,0 +1,22 @@
+ROUTINE EXERCICIO1
+EXERCICIO1	;
+    ;Solicita a entrada dos dados
+    R "Digite o valor de X: ", x, !
+    R "Digite o valor de Y: ", y, !
+    ;
+    ; Validação - Deixa em ordem mesmo que X seja menor
+    IF x > y {
+        S temp = x
+        S x = y
+        S y = temp
+    }
+    W !!, "Numeros pares entre ", x, " e ", y, ":", !
+    ;
+    FOR i = x:1:y {
+        IF (i # 2) = 0 {
+            W i, " "
+        }
+    }
+    W !
+    QUIT
+    ;

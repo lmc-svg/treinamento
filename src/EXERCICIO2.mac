@@ -1,0 +1,32 @@
+ROUTINE EXERCICIO2
+EXERCICIO2	;	
+	;Soliciita os valores
+	R "Digite o valor de X: ", x, !
+	R "Digite o valor de Y: ", y, !
+	;
+	;Validar os valores
+	IF x > y {
+		S temp = x
+		S x = y
+		S y = temp
+	}
+	; Inicializa contador de números ímpares encontrados
+    S quantImpares = 0
+    ;
+    W !!, "Numeros impares entre ", x, " e ", y, ":", !
+    ;
+    ; Loop para o intervalo de X até Y
+    FOR i = x:1:y {
+        ; O operador '= significa "Não igual" (Diferente)
+        ; Se o resto da divisão por 2 for diferente de 0, o número é ímpar
+        IF (i # 2) '= 0 {
+            W i, " "
+            S quantImpares = quantImpares + 1
+        }
+    }
+    ;
+    ; Exibe a quantidade total de números ímpares encontrados
+    W !!, "Quantidade total de numeros impares: ", quantImpares, !
+    QUIT
+    ;	
+	

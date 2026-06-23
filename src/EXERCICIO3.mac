@@ -1,0 +1,62 @@
+ROUTINE EXERCICIO3
+EXERCICIO3	;	
+    ;
+    R "Digite o primeiro numero (num1): ", num1, !
+    R "Digite o segundo numero (num2): ", num2, !
+    R "Digite o terceiro numero (num3): ", num3, !
+    ;
+    W !,"=========================================",!
+    ;
+    ; -------------------------------------------------------------
+    ; 4.1 - Números entre num1 e num2 com resto 5 quando divididos por 11
+    ; -------------------------------------------------------------
+    W "--- Item 4.1 (Resto 5 da divisao por 11) ---", !
+    S cont41 = 0
+    ;
+    ; Organiza do menor para o maior
+    S ini = $Select(num1<num2:num1, 1:num2)
+    S fim = $Select(num1>num2:num1, 1:num2)
+    ;
+    ;
+    FOR i = ini:1:fim {
+        IF (i # 11) = 5 {
+            W i, " "
+            S cont41 = cont41 + 1
+        }
+    }
+    W !, "Total de numeros encontrados: ", cont41, !!, "---"
+    ;
+    ; -------------------------------------------------------------
+    ; 4.2 - Números múltiplos de 3 entre num2 e num3
+    ; -------------------------------------------------------------
+    W !,"--- Item 4.2 (Multiplos de 3 entre num2 e num3) ---", !
+    S cont42 = 0
+    ;
+    ; Organiza para o loop
+    S ini = $Select(num2<num3:num2, 1:num3)
+    S fim = $Select(num2>num3:num2, 1:num3)
+    ;
+    FOR i = ini:1:fim {
+        IF (i # 3) = 0 {
+            W i, " "
+            S cont42 = cont42 + 1
+        }
+    }
+    W !, "Total de multiplos de 3 encontrados: ", cont42, !!, "---"
+    ;
+    ; -------------------------------------------------------------
+    ; 4.3 - Soma de todos os números entre num1 e num2
+    ; -------------------------------------------------------------
+    W !,"--- Item 4.3 (Soma entre num1 e num2) ---", !
+    S soma43 = 0
+    ;
+    S ini = $Select(num1<num2:num1, 1:num2)
+    S fim = $Select(num1>num2:num1, 1:num2)
+    ;
+    FOR i = ini:1:fim {
+        S soma43 = soma43 + i
+    }
+    W "A soma de todos os numeros no intervalo é: ", soma43, !
+    W "=========================================",!
+    ;
+    QUIT

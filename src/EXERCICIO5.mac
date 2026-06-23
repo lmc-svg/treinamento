@@ -1,0 +1,66 @@
+ROUTINE EXERCICIO5
+EXERCICIO5	;
+    ;
+    W "=== CADASTRO MULTIPLO DE ALUNOS ===", !
+    R "Quantos alunos deseja cadastrar? ", qtdAlunos, !
+    ;
+    ; Valida a quantidade
+    IF (qtdAlunos <= 0) || ('$IsValidNum(qtdAlunos)) {
+        W "Quantidade invalida. Encerrando rotina.", !
+        QUIT
+    }
+    ;
+    ; Loop para cadastrar X alunos
+    FOR x = 1:1:qtdAlunos {
+        W !!, "--- Cadastrando o Aluno ", x, " de ", qtdAlunos, " ---", !
+        ;
+        ; 1. Leitura dos dados
+        R "Matricula: ", matricula, !
+        R "Nome Completo: ", nome, !
+        R "Telefone: ", telefone, !
+        ;
+        ; Validação Data de Nascimento
+        S dataValida = 0
+        FOR {
+            R "Data de Nascimento (DD/MM/AAAA): ", dataInput, !
+            TRY {
+                S dataInterna = $ZDateH(dataInput, 4)
+                S dataValida = 1
+            } CATCH {
+                W ">> Data invalida! Use o formato DD/MM/AAAA.", !
+            }
+            QUIT:dataValida
+        }
+        ;
+        ; Validação do Sexo
+        S sexoValido = 0
+        FOR {
+            R "Sexo (M/F): ", sexo, !
+            S sexo = $ZConvert(sexo, "U")
+            IF (sexo = "M") || (sexo = "F") { S sexoValido = 1 }
+            ELSE { W ">> Opcao invalida! Digite M ou F.", ! }
+            QUIT:sexoValido
+        }
+        ;
+        ; Armazenamento dos dados na Global ^tAluno
+        ; Conforme a estrutura solicitada: ^tAluno(indice, "propriedade") = valor
+        S ^tAluno(x, "matricula") = matricula
+        S ^tAluno(x, "nome") = nome
+        S ^tAluno(x, "telefone") = telefone
+        S ^tAluno(x, "data_nascimento") = dataInterna ; Salva no formato interno ($H)
+        S ^tAluno(x, "sexo") = sexo
+        ;
+        W !,">> Aluno ", nome, " cadastrado com sucesso no indice (", x, ")!", !
+    }
+    ; -------------------------------------------------------------
+    ; Exibição do conteúdo gravado na Global (Apenas para validação)
+    ; -------------------------------------------------------------
+    W !,"=========================================",!
+    W "    CONTEUDO GRAVADO NA GLOBAL ^tAluno   ",!
+    W "=========================================",!
+    ;
+    ZW ^tAluno
+    ;
+    W "=========================================",!
+    QUIT
+    ;

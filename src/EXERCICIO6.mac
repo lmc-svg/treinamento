@@ -1,0 +1,38 @@
+ROUTINE EXERCICIO6
+EXERCICIO6 ; 
+    W "=== CONVERSOR DE CALENDARIO ===", !
+    ;
+    ; Loop de validação para garantir que a data inserida é válida
+    S dataValida = 0
+    FOR {
+        R "Digite uma data no formato (DD/MM/AAAA): ", dataInput, !
+        ;
+        TRY {
+            ; 1.1 – Converte para o formato $Horolog ($H)
+            S dataH = $ZDateH(dataInput, 4)
+            S dataValida = 1
+        } Catch {
+            W ">> Data invalida ou formato incorreto! Tente novamente.", !
+        }
+        QUIT:dataValida
+    }
+    ;
+    ; Converte a data interna para o formato islâmico (ex: "22 Ramadan 1416")
+    S dataIslamica = $ZDate(dataH, 18)
+    ;
+    ; Obtém o nome do mês islâmico
+    ; Usa o $Piece para pegar a segunda palavra da string gerada no formato islâmico,
+    ; que corresponde exatamente ao nome do mês.
+    S mesIslamicoNome = $Piece(dataIslamica, " ", 2)
+    ;
+    W !,"=========================================",!
+    W "              RESULTADOS                 ",!
+    W "=========================================",!
+    W "Data digitada:               ", dataInput, !
+    W "1.1 - Formato $Horolog ($H):  ", dataH, !
+    W "1.2 - Formato Islamico (18): ", dataIslamica, !
+    W "1.3 - Nome do Mes Islamico:  ", mesIslamicoNome, !
+    W "=========================================",!
+    ;
+    QUIT
+    ;

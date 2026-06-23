@@ -1,0 +1,50 @@
+ROUTINE EXERCICIO4
+EXERCICIO4	;	
+    ;
+    W "=== CADASTRO DE ALUNO ===", !
+    ;
+    R "Matricula: ", matricula, !
+    R "Nome Completo: ", nome, !
+    R "Telefone: ", telefone, !
+    ;
+    ; 4. Leitura e Validação da Data de Nascimento (Formato DD/MM/AAAA)
+    S dataValida = 0
+    FOR {
+        R "Data de Nascimento (DD/MM/AAAA): ", dataInput, !
+        TRY {
+            S dataInterna = $ZDateH(dataInput, 4)
+            S dataValida = 1
+        } CATCH {
+            W ">> Data invalida! Por favor, use o formato DD/MM/AAAA.", !
+        }
+        ;
+        QUIT:dataValida
+    }
+    S sexoValido = 0
+    FOR {
+        R "Sexo (M/F): ", sexo, !
+        S sexo = $ZConvert(sexo, "U") ; Converte para Maiúsculo
+        ;
+        IF (sexo = "M") || (sexo = "F") {
+            S sexoValido = 1
+        } ELSE {
+            W ">> Opcao invalida! Digite M para Masculino ou F para Feminino.", !
+        }
+        ;
+        QUIT:sexoValido
+    }
+    ;
+    ; -------------------------------------------------------------
+    ; Exibição dos Dados Cadastrados
+    ; -------------------------------------------------------------
+    W !,"=========================================",!
+    W "        COMPROVANTE DE CADASTRO          ",!
+    W "=========================================",!
+    W "Matricula:         ", matricula, !
+    W "Nome Completo:     ", nome, !
+    W "Telefone:          ", telefone, !
+    W "Data Nascimento:   ", $ZDate(dataInterna, 4), " (Salva internamente como: ", dataInterna, ")", !
+    W "Sexo:              ", $Select(sexo="M":"Masculino", 1:"Feminino"), !
+    W "=========================================",!
+    ;
+    QUIT
