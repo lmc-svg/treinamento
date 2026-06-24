@@ -1,0 +1,55 @@
+ROUTINE ExercicioClass
+ExercicioClass      ;
+
+    ; Limpa logs anteriores para o teste iniciar limpo
+    K ^Treinamento.Data.LogMensagemD
+
+    W "=== SIMULANDO ENTRADAS DE LOG ===", !
+    ;
+    S idLog1 = ##class(Treinamento.Data.LogMensagem).CriarEntrada("SalvarCliente", "Treinamento.BLL.Cliente")
+    IF idLog1 > 0 {
+        W "Log 1 criado com sucesso! ID: ", idLog1, !
+    } ELSE {
+        W "Falha ao criar Log 1", !
+    }
+    ;
+    S idLog2 = ##class(Treinamento.Data.LogMensagem).CriarEntrada("ProcessarPagamento", "Treinamento.BLL.Financeiro")
+    IF idLog2 > 0 {
+        W "Log 2 criado com sucesso! ID: ", idLog2, !
+    } ELSE {
+        W "Falha ao criar Log 2", !
+    }
+    ;
+    HANG 1
+    ;
+    W !, "=== FINALIZANDO CICLO DE VIDA DOS LOGS ===", !
+    ;
+    S st1 = ##class(Treinamento.Data.LogMensagem).Finalizar(idLog1, "Cliente gravado sem inconsistencias", "200")
+    IF st1 > 0 {
+        Write "Log ID ", idLog1, " finalizado com sucesso.", !
+    }
+    
+    ; Finaliza o Log 2 com Erro/Falha
+    S st2 = ##class(Treinamento.Data.LogMensagem).Finalizar(idLog2, "Erro de timeout na API da operadora", "500")
+    IF st2 > 0 {
+        W "Log ID ", idLog2, " finalizado com sucesso.", !
+    }
+    ;
+    ; Definindo os parâmetros de data para abranger o teste de hoje
+    S dataAmanha = $ZDateTime($Horolog + 1, 3) ; Amanhã no formato AAAA-MM-DD HH:MM:SS
+    S dataOntem  = $ZDateTime($Horolog - 1, 3) ; Ontem no formato AAAA-MM-DD HH:MM:SS
+    ;
+    ; Consulta apenas os logs que terminaram com status "200"
+    DO ##class(Treinamento.Data.LogMensagem).ConsultaLog("200", dataOntem, dataAmanha)
+    W !, "=== EXECUTANDO CONSULTA PAGINADA RETORNANDO VO ===", !
+    ;
+    S listaDeVOs = ##class(Treinamento.Data.LogMensagem).ConsultaLogPaginacao("500", 0, 1, dataAmanha)
+    ;
+    FOR i=1:1:listaDeVOs.Count() {
+        S vo = listaDeVOs.GetAt(i)
+        W "Dados vindos do VO -> Classe: ", vo.Classe, " | Metodo: ", vo.Metodo, " | Status: ", vo.Status, " | Processo: ", vo.StatusProcesso, !
+    }
+    W "==================================================", !
+    ;
+    QUIT
+    ;

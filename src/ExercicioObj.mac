@@ -1,39 +1,70 @@
 ROUTINE ExercicioObj
-ExercicioObj		;	
-	Kill ^Treinamento.Data.CursoD
-	;
-	;
-	S curso = ##class(Treinamento.Data.Curso).%New()
-	S curso.Nome = "Obj Script"
-	S curso.Duracao = 40
-	S curso.Preco = 1500
-	S status = curso.%Save()
-	
-	Kill ^Treinamento.Data.InstrutorD
-	;
-	;
-	S instrutor = ##class(Treinamento.Data.Instrutor).%New()
-	S instrutor.Nome = "Anderson"
-	S instrutor.Matricula = 2306
-	S valida = instrutor.%Save()
-	;
-	;
-	Kill ^Treinamento.Data.AlunoD
-	S aluno1 = ##class(Treinamento.Data.Aluno).%New()
-	S aluno1.Nome = "Maria Silva"
-	S aluno1.Matricula = "001"
-	S aluno1.Idade = 50
-	D aluno1.%Save()
-	;
-	S aluno2 = ##class(Treinamento.Data.Aluno).%New()
-	S aluno2.Nome = "José Cláudio"
-	S aluno2.Matricula = "002"
-	S aluno2.Idade = 60
-	D aluno2.%Save()
-	;
-	S aluno3 = ##class(Treinamento.Data.Aluno).%New()
-	S aluno3.Nome = "Leonardo"
-	S aluno3.Matricula = "003"
-	S aluno3.Idade = 30
-	D aluno3.%Save()
-	;
+ExercicioObj        ;   
+    Kill ^Treinamento.Data.CursoD
+    ;
+    ;
+    S curso = ##class(Treinamento.Data.Curso).%New()
+    S curso.Nome = "Obj Script"
+    S curso.Duracao = 40
+    S curso.Preco = 1500
+    S status = curso.%Save()
+    ;
+    ;
+    ///Exercicio – Criar um registro de Instrutor, três de Alunos
+    /// e uma Turma, com Data de Início vazia e Status com valor “Incompleta”.
+    ;
+    Kill ^Treinamento.Data.InstrutorD
+    ;
+    S instrutor = ##class(Treinamento.Data.Instrutor).%New()
+    S instrutor.Nome = "Anderson"
+    S instrutor.Matricula = 2306
+    S valida = instrutor.%Save()
+    ;
+    ;
+    Kill ^Treinamento.Data.AlunoD
+    S aluno1 = ##class(Treinamento.Data.Aluno).%New()
+    S aluno1.Nome = "Maria Silva"
+    S aluno1.Matricula = "001"
+    S aluno1.Idade = 50
+    D aluno1.%Save()
+    S aluno2 = ##class(Treinamento.Data.Aluno).%New()
+    S aluno2.Nome = "José Cláudio"
+    S aluno2.Matricula = "002"
+    S aluno2.Idade = 60
+    D aluno2.%Save()
+    S aluno3 = ##class(Treinamento.Data.Aluno).%New()
+    S aluno3.Nome = "Leonardo"
+    S aluno3.Matricula = "003"
+    S aluno3.Idade = 30
+    D aluno3.%Save()
+    ;
+    ;
+    ///Inserir no objeto Turma criado o Instrutor, os três alunos e gravar a Turma.
+    K ^Treinamento.Data.TurmaD
+    ;
+    S turma = ##class(Treinamento.Data.Turma).%New()
+    S turma.Curso = curso
+    S turma.Instrutor = instrutor
+    ;
+    D turma.Alunos.Insert(aluno1)
+    D turma.Alunos.Insert(aluno2)
+    D turma.Alunos.Insert(aluno3)
+    ;
+    S turma.DataInicio = ""
+    S turma.Status = "Incompleta"
+    ;
+    S statusTurma = turma.%Save()
+    ;
+    IF statusTurma <= 0 {
+        W "Erro ao salvar a turma!", !
+        D $System.Status.DisplayError(statusTurma)
+        QUIT
+    }
+    ;
+    W "Turma salva com sucesso!", !
+    ;
+    S statusRetornado = turma.VerificaStatus("Obj Script")
+    ;
+    D ##class(Treinamento.Data.Turma).ImprimeTurma("Obj Script")
+    ;
+    QUIT

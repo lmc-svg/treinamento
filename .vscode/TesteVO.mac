@@ -1,0 +1,58 @@
+ROUTINE TesteVO
+TesteVO    ; Rotina p/ gerar logs puramente na memória (VO) sem persistir
+
+    W "=== GERANDO LOGS PURAMENTE EM MEMORIA (VO) ===", !
+    
+    ; -----------------------------------------------------------------
+    ;       Criando o primeiro Log de Sucesso na memória
+    ; -----------------------------------------------------------------
+    S logVO1 = ##class(Treinamento.VO.LogMensagem).%New()
+    S logVO1.Metodo = "SalvarCliente"
+    S logVO1.Classe = "Treinamento.BLL.Cliente"
+    S logVO1.Inicio = $ZDateTime($Horolog, 3)     ; Data/Hora de início
+    S logVO1.Fim = $ZDateTime($Horolog, 3)        ; Data/Hora de término
+    S logVO1.Status = 1                           ; 1 = Verdadeiro (Sucesso) para o Boolean do professor
+    S logVO1.StatusProcesso = "Cliente gravado sem inconsistencias"
+
+    ; -----------------------------------------------------------------
+    ;       Criando o segundo Log de Erro na memória
+    ; -----------------------------------------------------------------
+    S logVO2 = ##class(Treinamento.VO.LogMensagem).%New()
+    S logVO2.Metodo = "ProcessarPagamento"
+    S logVO2.Classe = "Treinamento.BLL.Financeiro"
+    S logVO2.Inicio = $ZDateTime($Horolog, 3)
+    S logVO2.Fim = $ZDateTime($Horolog, 3)
+    S logVO2.Status = 0                           ; 0 = Falso (Erro) para o Boolean do professor
+    S logVO2.StatusProcesso = "Erro de timeout na API da operadora"
+
+    ; -----------------------------------------------------
+    ; 3. Apresenta os dados na tela
+    ; -----------------------------------------------------
+    W !, "=== APRESENTANDO DADOS DOS LOGS NO TERMINAL ===", !
+    
+    W "LOG 1 [SUCESSO]:", !
+    W "  Classe...: ", logVO1.Classe, !
+    W "  Metodo...: ", logVO1.Metodo, !
+    W "  Periodo..: ", logVO1.Inicio, " ate ", logVO1.Fim, !
+    W "  Status...: ", logVO1.Status, " (Sucesso)", !
+    W "  Processo.: ", logVO1.StatusProcesso, !
+    W "--------------------------------------------------", !
+    
+    W "LOG 2 [ERRO]:", !
+    W "  Classe...: ", logVO2.Classe, !
+    W "  Metodo...: ", logVO2.Metodo, !
+    W "  Periodo..: ", logVO2.Inicio, " ate ", logVO2.Fim, !
+    W "  Status...: ", logVO2.Status, " (Falha)", !
+    W "  Processo.: ", logVO2.StatusProcesso, !
+    W "==================================================", !
+
+    ; --------------------------------------------
+    ;           Mostrando o formato JSON 
+    ; --------------------------------------------
+    W !, "=== APRESENTACAO FORMATO JSON ===", !
+    W "JSON Log 1: " Do logVO1.%JSONExport() W !
+    W "JSON Log 2: " Do logVO2.%JSONExport() W !
+    W "==================================================", !
+
+    QUIT
+#; 
