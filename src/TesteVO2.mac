@@ -1,0 +1,20 @@
+ROUTINE TesteVO2
+TesteVO2    ; Testando os exercícios 15 e 16
+
+    W "=== EXERCÍCIO 15: BUSCANDO ID 1 EM FORMATO JSON ===", !
+    S jsonIndividual = ##class(Treinamento.Data.LogMensagem).BuscarLogPorIdJSON(1)
+    D jsonIndividual.%ToJSON()
+    W !, "--------------------------------------------------", !, !
+
+    W "=== EXERCÍCIO 16: CONSULTA PAGINADA RETORNANDO JSON ===", !
+    S dataAmanha = $ZDateTime($Horolog + 1, 3)
+    
+    ; Parâmetros: Status=0 (Falhas), LastId=0, PageSize=2, DataFim
+    S jsonPaginado = ##class(Treinamento.Data.LogMensagem).ConsultaLogPaginacaoJSON("200", 0, 2, dataAmanha)
+    
+    ; Exibe a estrutura única envelopada pela classe
+    D jsonPaginado.%ToJSON()
+    W !, "==================================================", !
+    ;
+    QUIT
+    ;

@@ -2,7 +2,7 @@ ROUTINE ExercicioClass
 ExercicioClass      ;
 
     ; Limpa logs anteriores para o teste iniciar limpo
-    K ^Treinamento.Data.LogMensagemD
+    //K ^Treinamento.Data.LogMensagemD
 
     W "=== SIMULANDO ENTRADAS DE LOG ===", !
     ;

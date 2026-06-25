@@ -7,9 +7,9 @@ Property NomePerfil As %String(MAXLEN = 50);
 Property Codigo As %String(MAXLEN = 10);
 
 
-
 Storage Default
 {
+
 <Data name="PerfilDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>

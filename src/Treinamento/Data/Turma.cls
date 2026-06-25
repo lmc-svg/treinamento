@@ -2,15 +2,10 @@ Class Treinamento.Data.Turma Extends (%Persistent, %XML.Adaptor)
 {
 
 Property Instrutor As Treinamento.Data.Instrutor;
-
 Property DataInicio As %Date;
-
 Property Status As %String(MAXLEN = 20, VALUELIST = ",Ativa,Concluida,Cancelada,Incompleta");
-
 Property Alunos As list Of Treinamento.Data.Aluno;
-
 Property Curso As Treinamento.Data.Curso;
-
 Method VerificaStatus(nomeCurso As %String) As %String
 {
     If (..Curso '= "") && (..Curso.Nome = nomeCurso) {

@@ -104,6 +104,76 @@ ClassMethod ConsultaLogPaginacao(pStatus As %String, pLastId As %Integer, pPagSi
     QUIT listaRetorno
 }
 
+/// 15 - Busca um log pelo ID e retorna um objeto dinâmico (%DynamicObject) no formato JSON
+ClassMethod BuscarLogPorIdJSON(pIdLog As %Integer) As %DynamicObject
+{
+    S objLog = ##class(Treinamento.Data.LogMensagem).%OpenId(pIdLog)
+    IF objLog = "" { quit ##class(%DynamicObject).%New() } ; Retorna um JSON vazio caso não encontre
+    
+    // Instancia o VO na memória para fazer a máscara correta
+    S oVO = ##class(Treinamento.VO.LogMensagem).%New()
+    S oVO.Metodo = objLog.Metodo
+    S oVO.Classe = objLog.Classe
+    S oVO.Inicio = objLog.Inicio
+    S oVO.Fim = objLog.Fim
+    S oVO.Status = objLog.Status
+    S oVO.StatusProcesso = objLog.StatusProcesso
+    
+    D oVO.%JSONExportToString(.jsonString)
+    QUIT ##class(%DynamicObject).%FromJSON(jsonString)
+}
+
+/// 16 - Retorna uma estrutura JSON paginada completa com dados, total da página e o próximo cursor
+ClassMethod ConsultaLogPaginacaoJSON(pStatus As %Boolean, pLastId As %Integer, pPageSize As %Integer, pDataFim As %TimeStamp) As %DynamicObject
+{
+
+    S jsonResult = ##class(%DynamicObject).%New()
+    S jsonArray = ##class(%DynamicArray).%New()
+    
+    S contador = 0
+    S proximoLastId = pLastId
+    
+    &sql(
+        DECLARE PagJSONCursor CURSOR FOR
+        SELECT ID, Metodo, Classe, Inicio, Fim, Status, StatusProcesso
+        FROM Treinamento_Data.LogMensagem
+        WHERE Status = :pStatus AND ID > :pLastId AND Inicio <= :pDataFim
+        ORDER BY ID ASC
+    )
+    
+    &sql(OPEN PagJSONCursor)
+    for {
+        &sql(FETCH PagJSONCursor INTO :id, :metodo, :classe, :inicio, :fim, :status, :statusProc)
+        IF SQLCODE '= 0 { quit }
+        
+        // Monta o VO na memória temporária para estruturar o JSON
+        S oVO = ##class(Treinamento.VO.LogMensagem).%New()
+        S oVO.Metodo = metodo
+        S oVO.Classe = classe
+        S oVO.Inicio = inicio
+        S oVO.Fim = fim
+        S oVO.Status = status
+        S oVO.StatusProcesso = statusProc
+        
+        // Transforma o VO em objeto dinâmico e empurra para o Array
+        D oVO.%JSONExportToString(.jsonString)
+        S jsonObjeto = ##class(%DynamicObject).%FromJSON(jsonString)
+        D jsonArray.%Push(jsonObjeto)
+        
+        S contador = contador + 1
+        S proximoLastId = id ; O último ID processado vira a referência do próximo cursor
+        
+        IF contador >= pPageSize { quit }
+    }
+    &sql(CLOSE PagJSONCursor)
+    
+    S jsonResult.dados = jsonArray
+    S jsonResult.totalRegistros = contador
+    S jsonResult.ProximoLastId = proximoLastId
+    
+    QUIT jsonResult
+}
+
 Storage Default
 {
 <Data name="LogMensagemDefaultData">
