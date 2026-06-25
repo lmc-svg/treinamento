@@ -2,11 +2,17 @@ Class Treinamento.Data.LogMensagem Extends (%Persistent, %XML.Adaptor)
 {
 
 Property Metodo As %String(MAXLEN = 255);
+
 Property Classe As %String(MAXLEN = 255);
+
 Property Inicio As %TimeStamp;
+
 Property Fim As %TimeStamp;
+
 Property Status As %String(MAXLEN = 255);
+
 Property StatusProcesso As %String(MAXLEN = 255);
+
 Property ListaLog As list Of %String(MAXLEN = 255);
 
 ClassMethod CriarEntrada(pMetodo As %String, pClasse As %String) As %Integer

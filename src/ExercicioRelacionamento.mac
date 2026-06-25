@@ -1,0 +1,89 @@
+ROUTINE ExercicioRelacionamento
+ExercicioRelacionamento     ;
+
+    ; Limpa as tabelas antes de iniciar a carga
+    K ^Treinamento.Data.UsuarioD, ^Treinamento.Data.UsuarioI
+    K ^Treinamento.Data.PerfilD, ^Treinamento.Data.PerfilI
+    K ^Treinamento.Data.NivelD, ^Treinamento.Data.NivelI
+
+    W "=== EXERCÍCIO 5: CRIANDO REGISTROS DE NÍVEL ===", !
+    
+    ; 1. Acesso Total
+    S n1 = ##class(Treinamento.Data.Nivel).%New()
+    S n1.NomeNivel = "Acesso Total"
+    S n1.Codigo = "TOTAL"
+    D n1.%Save()
+    
+    ; 2. Acesso Gerente
+    S n2 = ##class(Treinamento.Data.Nivel).%New()
+    S n2.NomeNivel = "Acesso Gerente"
+    S n2.Codigo = "GER"
+    D n2.%Save()
+    
+    ; 3. Acesso Coordenador
+    S n3 = ##class(Treinamento.Data.Nivel).%New()
+    S n3.NomeNivel = "Acesso Coordenador"
+    S n3.Codigo = "COORD"
+    D n3.%Save()
+    
+    W "Níveis criados com sucesso!", !, !
+
+
+    W "=== EXERCÍCIO 6: CRIANDO REGISTROS DE PERFIL (VINCULADOS AO NÍVEL) ===", !
+    
+    ; 1. Perfil Diretor -> Associado ao Nível "Acesso Total" (n1)
+    S p1 = ##class(Treinamento.Data.Perfil).%New()
+    S p1.NomePerfil = "Diretor"
+    S p1.Codigo = "DIR"
+    S p1.Nivel = n1 ; Ligação feita aqui obedece à regra de cardinalidade
+    D p1.%Save()
+    
+    ; 2. Perfil Gerente -> Associado ao Nível "Acesso Gerente" (n2)
+    S p2 = ##class(Treinamento.Data.Perfil).%New()
+    S p2.NomePerfil = "Gerente"
+    S p2.Codigo = "MGR"
+    S p2.Nivel = n2
+    D p2.%Save()
+    
+    ; 3. Perfil Coordenador -> Associado ao Nível "Acesso Coordenador" (n3)
+    S p3 = ##class(Treinamento.Data.Perfil).%New()
+    S p3.NomePerfil = "Coordenador"
+    S p3.Codigo = "CRD"
+    S p3.Nivel = n3
+    D p3.%Save()
+    
+    W "Perfis criados e vinculados com sucesso!", !, !
+
+
+    W "=== EXERCÍCIO 7: CRIANDO REGISTROS DE USUÁRIO (VINCULADOS AO PERFIL) ===", !
+    
+    ; Usuário 1 -> Diretor
+    S u1 = ##class(Treinamento.Data.Usuario).%New()
+    S u1.Nome = "Carlos"
+    S u1.SobreNome = "Alberto Silva"
+    S u1.Sexo = "M"
+    S u1.Email = "carlos.diretor@empresa.com"
+    S u1.Perfil = p1 ; Vincula ao Perfil Diretor
+    D u1.%Save()
+    
+    ; Usuário 2 -> Gerente
+    S u2 = ##class(Treinamento.Data.Usuario).%New()
+    S u2.Nome = "Mariana"
+    S u2.SobreNome = "Monteiro"
+    S u2.Sexo = "F"
+    S u2.Email = "mariana.gerente@empresa.com"
+    S u2.Perfil = p2 ; Vincula ao Perfil Gerente
+    D u2.%Save()
+
+    ; Usuário 3 -> Coordenador
+    S u3 = ##class(Treinamento.Data.Usuario).%New()
+    S u3.Nome = "Leonardo"
+    S u3.SobreNome = "Carabajal"
+    S u3.Sexo = "M"
+    S u3.Email = "leonardo.coord@empresa.com"
+    S u3.Perfil = p3 ; Vincula ao Perfil Coordenador
+    D u3.%Save()
+
+    W "Usuários criados e relacionados com sucesso!", !
+    W "=======================================================", !
+    QUIT

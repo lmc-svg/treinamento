@@ -1,10 +1,16 @@
 Class Treinamento.Data.Turma Extends (%Persistent, %XML.Adaptor)
 {
+
 Property Instrutor As Treinamento.Data.Instrutor;
+
 Property DataInicio As %Date;
+
 Property Status As %String(MAXLEN = 20, VALUELIST = ",Ativa,Concluida,Cancelada,Incompleta");
+
 Property Alunos As list Of Treinamento.Data.Aluno;
+
 Property Curso As Treinamento.Data.Curso;
+
 Method VerificaStatus(nomeCurso As %String) As %String
 {
     If (..Curso '= "") && (..Curso.Nome = nomeCurso) {
@@ -12,6 +18,7 @@ Method VerificaStatus(nomeCurso As %String) As %String
     }
     Quit "Curso nao encontrado nesta turma"
 }
+
 ClassMethod ImprimeTurma(nomeCurso As %String)
 {
     Set turmaId = ""
@@ -70,8 +77,46 @@ Storage Default
 </Data>
 <DataLocation>^Treinamento.Data.TurmaD</DataLocation>
 <DefaultData>TurmaDefaultData</DefaultData>
+<ExtentSize>1</ExtentSize>
 <IdLocation>^Treinamento.Data.TurmaD</IdLocation>
 <IndexLocation>^Treinamento.Data.TurmaI</IndexLocation>
+<Property name="%%CLASSNAME">
+<AverageFieldSize>2</AverageFieldSize>
+<OutlierSelectivity>.999999:</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<Property name="%%ID">
+<AverageFieldSize>3</AverageFieldSize>
+<Selectivity>1</Selectivity>
+</Property>
+<Property name="Alunos">
+<AverageFieldSize>17</AverageFieldSize>
+<OutlierSelectivity>.999999:$lb($lb("1"),$lb("2"),$lb("3"))</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<Property name="Curso">
+<AverageFieldSize>3</AverageFieldSize>
+<OutlierSelectivity>.999999:1</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<Property name="DataInicio">
+<AverageFieldSize>2</AverageFieldSize>
+<OutlierSelectivity>.999999:</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<Property name="Instrutor">
+<AverageFieldSize>3</AverageFieldSize>
+<OutlierSelectivity>.999999:1</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<Property name="Status">
+<AverageFieldSize>12</AverageFieldSize>
+<OutlierSelectivity>.999999:"Incompleta"</OutlierSelectivity>
+<Selectivity>0.0001%</Selectivity>
+</Property>
+<SQLMap name="IDKEY">
+<BlockCount>-4</BlockCount>
+</SQLMap>
 <StreamLocation>^Treinamento.Data.TurmaS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
