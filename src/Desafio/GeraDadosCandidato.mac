@@ -1,0 +1,22 @@
+ROUTINE GeraDadosCandidato
+GeraDadosCandidato ; Item 4 - Carga estável de Candidatos
+    K ^Prova.Data.CandidatoD, ^Prova.Data.CandidatoI
+    ;
+    S c1 = ##class(Prova.Data.Candidato).%New()
+    S c1.Nome = "Leonardo", c1.Idade = 25, c1.Sexo = "Masculino", c1.CodigoCandidato = 1
+    D c1.%Save()
+    ;
+    S c2 = ##class(Prova.Data.Candidato).%New()
+    S c2.Nome = "Rodrigo", c2.Idade = 43, c2.Sexo = "Masculino", c2.CodigoCandidato = 2
+    D c2.%Save()
+    ;
+    S c3 = ##class(Prova.Data.Candidato).%New()
+    S c3.Nome = "Amanda", c3.Idade = 34, c3.Sexo = "Feminino", c3.CodigoCandidato = 3
+    D c3.%Save()
+    ;
+    S c4 = ##class(Prova.Data.Candidato).%New()
+    S c4.Nome = "Claudia", c4.Idade = 27, c4.Sexo = "Feminino", c4.CodigoCandidato = 4
+    D c4.%Save()
+    ;
+    W "Carga do Item 4 realizada!", !
+    QUIT

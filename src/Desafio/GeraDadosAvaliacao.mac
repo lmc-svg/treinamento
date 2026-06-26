@@ -1,0 +1,39 @@
+ROUTINE GeraDadosAvaliacao
+GeraDadosAvaliacao ; Popula as avaliações linkando ao ID interno do Candidato
+    K ^Prova.Data.AvaliacaoD, ^Prova.Data.AvaliacaoI
+    ;
+    S dados(1) = $ListBuild(1, "Algoritimo", "Teorica", 5)
+    S dados(2) = $ListBuild(2, "Algoritimo", "Teorica", 7)
+    S dados(3) = $ListBuild(3, "Algoritimo", "Teorica", 2)
+    S dados(4) = $ListBuild(4, "Algoritimo", "Teorica", 10)
+    S dados(5) = $ListBuild(1, "Infra", "Teorica", 10)
+    S dados(6) = $ListBuild(2, "Infra", "Teorica", 3)
+    S dados(7) = $ListBuild(3, "Infra", "Teorica", 6)
+    S dados(8) = $ListBuild(4, "Infra", "Teorica", 8)
+    S dados(9) = $ListBuild(1, "Java", "Pratica", 7)
+    S dados(10) = $ListBuild(2, "Java", "Pratica", 9)
+    S dados(11) = $ListBuild(3, "Java", "Pratica", 4)
+    S dados(12) = $ListBuild(4, "Java", "Pratica", 1)
+    ;
+    S idx = ""
+    FOR {
+        S idx = $Order(dados(idx))
+        quit:idx=""
+        
+        S item = dados(idx)
+        S codCand = $List(item, 1)
+        &sql(SELECT ID INTO :idInterno FROM Prova_Data.Candidato WHERE CodigoCandidato = :codCand)
+        
+        if (SQLCODE = 0) {
+            S objCand = ##class(Prova.Data.Candidato).%OpenId(idInterno)
+            S objAval = ##class(Prova.Data.Avaliacao).%New()
+            S objAval.CodigoCandidato = codCand
+            S objAval.NomeDisciplina = $List(item, 2)
+            S objAval.Tipo = $List(item, 3)
+            S objAval.Nota = $List(item, 4)
+            S objAval.Candidato = objCand // Linka o relacionamento nativo
+            D objAval.%Save()
+        }
+    }
+    W "Carga de avaliacoes gerada com sucesso vinculada aos objetos!", !
+    QUIT

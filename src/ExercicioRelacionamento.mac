@@ -8,19 +8,19 @@ ExercicioRelacionamento     ;
     ;
     W "=== CRIANDO REGISTROS DE NÍVEL ===", !
     ;
-    ; 1. Acesso Total
+    ; Total
     S n1 = ##class(Treinamento.Data.Nivel).%New()
     S n1.NomeNivel = "Acesso Total"
     S n1.Codigo = "TOTAL"
     D n1.%Save()
     ;
-    ; 2. Acesso Gerente
+    ; Gerente
     S n2 = ##class(Treinamento.Data.Nivel).%New()
     S n2.NomeNivel = "Acesso Gerente"
     S n2.Codigo = "GER"
     D n2.%Save()
     ;
-    ; 3. Acesso Coordenador
+    ; Coordenador
     S n3 = ##class(Treinamento.Data.Nivel).%New()
     S n3.NomeNivel = "Acesso Coordenador"
     S n3.Codigo = "COORD"

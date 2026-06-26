@@ -1,0 +1,55 @@
+ROUTINE DesafioFinal
+DesafioFinal ; Validação global automatizada do Desafio ObjectScript
+    ;
+    W "=== EXECUTANDO AS ROTINAS DE CARGA ===", !
+    D ^GeraDadosCandidato
+    D ^GeraDadosAvaliacao
+    W "--------------------------------------------------", !
+    ;
+    W "=== CONSULTA CANDIDATO ===", !
+    D ##class(Prova.Data.Avaliacao).ConsultaCandidato(1)
+    W "--------------------------------------------------", !
+    ;
+    W "=== VERIFICA APROVACAO ===", !
+    S objCand = ##class(Prova.Data.Candidato).%OpenId(1)
+    IF objCand '= "" {
+        W "Resultados em Linha: ", objCand.VerificaAprovacao(), !
+    }
+    W "--------------------------------------------------", !
+    ;
+    W "=== ANALISA NOME ===", !
+    D ##class(Prova.Data.Candidato).AnalisaNome("Leonardo Alberto Silva")
+    W "--------------------------------------------------", !
+    ;
+    W "=== ANALISA DATA NASCIMENTO ===", !
+    D ##class(Prova.Data.Candidato).AnalisaDataNascimento("26/06/2001")
+    W "--------------------------------------------------", !
+    ;
+    W "=== BUSCAR CANDIDATO POR ID JSON ===", !
+    S json10 = ##class(Prova.Data.Candidato).BuscarCandidatoPorIdJSON(1)
+    D json10.%ToJSON()
+    W !, "--------------------------------------------------", !
+    ;
+    W "=== CONSULTA PAGINACAO CANDIDATO JSON ===", !
+    S json11 = ##class(Prova.Data.Candidato).ConsultaCandidatoPaginacaoJSON("L", 0, 2, "Masculino")
+    D json11.%ToJSON()
+    W !, "--------------------------------------------------", !
+    ;
+    W "=== EXECUÇÃO E PERSISTÊNCIA DO LOG ===", !
+    S idLog = ##class(Prova.Data.LogSistema).CriarLogMensagem("ValidarDesafio", "SISTEMA_AVALIACOES")
+    W "Log gravado com sucesso no ID: ", idLog, !
+    W "--------------------------------------------------", !
+    ;
+    W "=== CONSULTAS DE LOG EM TELA E ARRAY JSON ===", !
+    S dataFutura = $ZDateTime($Horolog+1, 3)
+    S dataPassada = $ZDateTime($Horolog-1, 3)
+    D ##class(Prova.Data.LogSistema).ConsultaLog(1, dataPassada, dataFutura)
+    ;
+    W !, "JSON Paginado do Log Unificado: ", !
+    S jsonLog = ##class(Prova.Data.LogSistema).ConsultaLogPaginacaoJSON(1, 0, 10, dataFutura)
+    D jsonLog.%ToJSON()
+    W !, "==================================================", !
+    ;
+    W "PROJETO COMPILADO COM SUCESSO", !
+    QUIT
+    ;
