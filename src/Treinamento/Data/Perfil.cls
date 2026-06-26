@@ -2,10 +2,11 @@
 ///Codigo
 Class Treinamento.Data.Perfil Extends (%Persistent, %XML.Adaptor)
 {
-Property Nivel As Treinamento.Data.Nivel;
 Property NomePerfil As %String(MAXLEN = 50);
 Property Codigo As %String(MAXLEN = 10);
 
+Relationship Nivel As Treinamento.Data.Nivel [ Cardinality = one, Inverse = Perfis ];
+Relationship Usuarios As Treinamento.Data.Usuario [ Cardinality = many, Inverse = Perfil ];
 
 Storage Default
 {

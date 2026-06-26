@@ -4,13 +4,12 @@
 ///Email
 Class Treinamento.Data.Usuario Extends (%Persistent, %XML.Adaptor)
 {
-
-Property Perfil As Treinamento.Data.Perfil;
 Property Nome As %String(MAXLEN = 30);
 Property SobreNome As %String(MAXLEN = 30);
 Property Sexo As %String(MAXLEN = 1);
 Property Email As %String(MAXLEN = 100);
 
+Relationship Perfil As Treinamento.Data.Perfil [ Cardinality = one, Inverse = Usuarios ];
 
 Storage Default
 {

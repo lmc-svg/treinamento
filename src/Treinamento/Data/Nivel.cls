@@ -3,9 +3,11 @@
 
 Class Treinamento.Data.Nivel Extends (%Persistent, %XML.Adaptor)
 {
-
 Property NomeNivel As %String(MAXLEN = 50);
 Property Codigo As %String(MAXLEN = 10);
+
+// Relacionamento inverso: Um nível para muitos perfis
+Relationship Perfis As Treinamento.Data.Perfil [ Cardinality = many, Inverse = Nivel ];
 
 Storage Default
 {
