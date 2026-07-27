@@ -1,0 +1,78 @@
+ROUTINE CargaInicial
+
+    D ##class(TRE.DATA.Cliente).%KillExtent()
+    D ##class(TRE.DATA.Destino).%KillExtent()
+    D ##class(TRE.DATA.Pedido).%KillExtent()
+    ;
+    W "Iniciando carga de dados...",!
+    ;
+    // ==================================
+    // 1. POPULAR TABELA CLIENTE
+    // ==================================
+    D InsertCliente("3", "Alfreds Futterkiste", "Maria Anders", "Rua São João, 1536", "01510-000", "São Paulo", "SP", "alfreds@teste.com.br")
+    D InsertCliente("5", "Trujillo Emparedados", "Ana Trujillo", "Av. Beira Rio, 9878", "21333-972", "Rio de Janeiro", "RJ", "trujillo@teste.com.br")
+    D InsertCliente("6", "A M Taquería", "Antonio Moreno", "Av. Siqueira Campo, 988 - Sala 3", "02510-333", "São Paulo", "SP", "taqueria@teste.com.br")
+    D InsertCliente("7", "Around the Horn", "Thomas Hardy", "Av. Sete de Setembro, 1478", "80510-000", "Curitiba", "PR", "hardy@teste.com.br")
+    D InsertCliente("8", "Berglunds", "Christina Berglund", "Av. Pampulha, 87", "31455-999", "Belo Horizonte", "MG", "berglunds@teste.com.br")
+
+    W "Clientes inseridos!",!
+
+    // =================================
+    // 2. POPULAR TABELA DESTINO
+    // =================================
+    D InsertDestino("A1", "1000", "5999", 2)
+    D InsertDestino("A2", "8000", "8499", 2)
+    D InsertDestino("A3", "13000", "13139", 3)
+    D InsertDestino("B1", "20000", "23799", 4)
+    D InsertDestino("C1", "90000", "91999", 5)
+
+    W "Destinos inseridos!",!
+
+    // ==========================================
+    // 3. POPULAR TABELA PEDIDO
+    // ==========================================
+    D InsertPedido("1", $zdh("02/02/2006", 4), "3", 124.00, 22.1, 1, "1", $zdh("06/02/2006", 4))
+    D InsertPedido("2", $zdh("31/01/2006", 4), "3", 722.00, 75.4, 3, "2", $zdh("04/01/2006", 4))
+    D InsertPedido("3", $zdh("20/11/2005", 4), "5", 500.00, 28.9, 2, "2", $zdh("25/11/2005", 4))
+    D InsertPedido("12", $zdh("13/12/2018", 4), "7", 920.00, 12.4, 1, "2", $zdh("14/12/2018", 4))
+
+    W "Pedidos inseridos!",!
+    W "Carga finalizada com SUCESSO!",!
+    QUIT
+    ;
+    ;
+InsertCliente(pCodigo, pEmpresa, pContato, pEndereco, pCEP, pCidade, pEstado, pEmail)
+    S obj = ##class(TRE.DATA.Cliente).%New()
+    S obj.CodigoCliente = pCodigo
+    S obj.NomeEmpresa   = pEmpresa
+    S obj.NomeContato   = pContato
+    S obj.Endereco      = pEndereco
+    S obj.CEP           = pCEP
+    S obj.Cidade        = pCidade
+    S obj.Estado        = pEstado
+    S obj.EnderecoEmail = pEmail
+    D obj.%Save()
+    QUIT
+    ;
+InsertDestino(pCodigo, pCEPIni, pCEPFim, pPrazo)
+    S obj = ##class(TRE.DATA.Destino).%New()
+    S obj.CodigoDestino    = pCodigo
+    S obj.CEPInicial       = pCEPIni
+    S obj.CEPFinal         = pCEPFim
+    S obj.PrazoEntregaDias = pPrazo
+    D obj.%Save()
+    QUIT
+    ;
+InsertPedido(pCodPedido, pDataPedido, pCodCliente, pValor, pPeso, pVolumes, pCodTransp, pDataPrev)
+    Set obj = ##class(TRE.DATA.Pedido).%New()
+    Set obj.CodigoPedido        = pCodPedido
+    Set obj.DataPedido          = pDataPedido
+    Set obj.CodigoCliente       = pCodCliente
+    Set obj.ValorPedido         = pValor
+    Set obj.PesoKG              = pPeso
+    Set obj.Volumes             = pVolumes
+    Set obj.CodigoTransportadora = pCodTransp
+    Set obj.DataPrevisaoEntrega = pDataPrev
+    Do obj.%Save()
+    Quit
+    ;
