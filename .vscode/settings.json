@@ -1,7 +1,7 @@
 {
     "objectscript.conn": {
         "server": "consistem",
-        "ns": "COMP70",
-        "active": false
+        "ns": "TREINAMENTO",
+        "active": true
     }
 }
