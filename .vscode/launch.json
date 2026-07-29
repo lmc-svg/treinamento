@@ -4,6 +4,7 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "objectscript",
             "request": "launch",
@@ -15,13 +16,6 @@
             "request": "attach",
             "name": "Attach to running process"
         }
-        {
-            "type": "objectscript",
-            "request": "launch",
-            "name": "Debug EXERCICIO6",
-            "program": "^EXERCICIO6",
-            "system": true
-          }
     ]
 } 
         
