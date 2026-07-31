@@ -1,6 +1,5 @@
-Class trans.BO.DetalhesPedido.Cliente.Rest.Put.Response Extends Ens.Response
+Class trans.BP.DetalhesCliente.msg.Response Extends Ens.Response
 {
-
 Property Status As %Integer;
 Property Contents As %String(MAXLEN = "");
 Storage Default

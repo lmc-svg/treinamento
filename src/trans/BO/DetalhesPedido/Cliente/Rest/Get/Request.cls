@@ -1,7 +1,6 @@
-Class trans.BO.DetalhesPedido.Cliente.Rest.Get.Request Extends Ens.Request
-{
+Class trans.BO.DetalhesPedido.Cliente.Rest.Get.Request Extends Ens.Request{
 Property Metodo As %String;
-Property DATA As %String;
+Property DATA As %String(MAXLEN = "");
 Storage Default
 {
 <Data name="RequestDefaultData">

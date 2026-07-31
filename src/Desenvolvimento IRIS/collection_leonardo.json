@@ -1,0 +1,167 @@
+{
+  "info": {
+    "_postman_id": "39378e5c-5054-474b-be93-a0906b8a7a8e",
+    "name": "Treinamento IRIS REST - Leonardo Carabajal - Treinamento",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Consulta Cliente por Nome (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:52773/csp/treinamento/api/?NomeContato=Maria",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "52773",
+          "path": [
+            "csp",
+            "treinamento",
+            "api",
+            ""
+          ],
+          "query": [
+            {
+              "key": "NomeContato",
+              "value": "Maria",
+              "description": "Filtro pelo Nome de Contato do Cliente"
+            }
+          ]
+        },
+        "description": "Busca clientes na tabela filtrando por NomeContato"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Inclusão de Cliente (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"CodigoCliente\": \"CLI001\",\n  \"NomeEmpresa\": \"Empresa Teste LTDA\",\n  \"NomeContato\": \"Maria Silva\",\n  \"Endereco\": \"Rua das Flores, 123\",\n  \"CEP\": \"89200-000\",\n  \"Cidade\": \"Jaraguá do Sul\",\n  \"Estado\": \"SC\",\n  \"EnderecoEmail\": \"maria.silva@teste.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:52773/csp/treinamento/api/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "52773",
+          "path": [
+            "csp",
+            "treinamento",
+            "api",
+            ""
+          ]
+        },
+        "description": "Insere um novo registro com todos os campos da tabela TRE_DATA.Cliente"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Alteração de Cliente (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Id\": 1,\n  \"NomeEmpresa\": \"Empresa Teste Alterada S/A\",\n  \"NomeContato\": \"Maria Silva Santos\",\n  \"Endereco\": \"Avenida Central, 456\",\n  \"CEP\": \"89201-111\",\n  \"Cidade\": \"Joinville\",\n  \"Estado\": \"SC\",\n  \"EnderecoEmail\": \"maria.santos@teste.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:52773/csp/treinamento/api/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "52773",
+          "path": [
+            "csp",
+            "treinamento",
+            "api",
+            ""
+          ]
+        },
+        "description": "Atualiza os campos de um cliente existente informando o seu ID"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Exclusão de Cliente (DELETE)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:52773/csp/treinamento/api/?Id=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "52773",
+          "path": [
+            "csp",
+            "treinamento",
+            "api",
+            ""
+          ],
+          "query": [
+            {
+              "key": "Id",
+              "value": "1",
+              "description": "ID do registro a ser apagado do banco"
+            }
+          ]
+        },
+        "description": "Deleta o cliente da tabela pelo seu ID"
+      },
+      "response": []
+    }
+  ]
+}
