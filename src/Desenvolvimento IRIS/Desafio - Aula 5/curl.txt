@@ -1,0 +1,1 @@
+curl --location 'http://localhost:52773/csp/treinamento/api/credito/2/AnaliseCredito'
