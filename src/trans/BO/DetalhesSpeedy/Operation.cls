@@ -14,8 +14,6 @@ XData MessageMap
   </MapItem>
 </MapItems>
 }
-
-/// Exercício 4: Método VerificaDestinoSpeedy
 Method VerificaDestinoSpeedy(pRequest As trans.BO.DetalhesSpeedy.VerificaDestinoSpeedy.Request, Output pResponse As trans.BO.DetalhesSpeedy.VerificaDestinoSpeedy.Response) As %Status
 {
     SET tSC = $SYSTEM.Status.OK()
@@ -47,8 +45,6 @@ Method VerificaDestinoSpeedy(pRequest As trans.BO.DetalhesSpeedy.VerificaDestino
     
     QUIT tSC
 }
-
-/// Exercício 6: Método RecupPrazoEntrega
 Method RecupPrazoEntrega(pRequest As trans.BO.DetalhesSpeedy.RecupPrazoEntrega.Request, Output pResponse As trans.BO.DetalhesSpeedy.RecupPrazoEntrega.Response) As %Status
 {
     SET tSC = $SYSTEM.Status.OK()

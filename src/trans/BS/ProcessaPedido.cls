@@ -12,37 +12,37 @@ Parameter NAMESPACE = "http://tempuri.org";
 
 Method ProcessaPedido(pCodigoPedido As %String) As trans.VO.ConfirmaPedido [ WebMethod ]
 {
-    Set pResponseVO = ##class(trans.VO.ConfirmaPedido).%New()
-    Set status = ..OnProcessInput(pCodigoPedido, .pResponseVO)
+    SET pResponseVO = ##class(trans.VO.ConfirmaPedido).%New()
+    SET status = ..OnProcessInput(pCodigoPedido, .pResponseVO)
     
-    If '$IsObject(pResponseVO) {
-        Set pResponseVO = ##class(trans.VO.ConfirmaPedido).%New()
+    IF '$IsObject(pResponseVO) {
+        SET pResponseVO = ##class(trans.VO.ConfirmaPedido).%New()
     }
     
-    Quit pResponseVO
+    QUIT pResponseVO
 }
 
 Method OnProcessInput(pInput As %RegisteredObject, Output pOutput As %RegisteredObject) As %Status
 {
-    Set status = $$$OK
-    Set pOutput = ##class(trans.VO.ConfirmaPedido).%New()
+    SET status = $$$OK
+    SET pOutput = ##class(trans.VO.ConfirmaPedido).%New()
     
-    Set requestBP = ##class(trans.BP.ProcessaTransporte.Request).%New()
-    Set requestBP.CodigoPedido = pInput
+    SET requestBP = ##class(trans.BP.ProcessaTransporte.Request).%New()
+    SET requestBP.CodigoPedido = pInput
     
-    Set status = ..SendRequestSync("ProcessaTransporteCustom", requestBP, .responseBP)
+    SET status = ..SendRequestSync("ProcessaTransporteCustom", requestBP, .responseBP)
     
-    If $$$ISOK(status) && $IsObject($Get(responseBP)) {
-    Set pOutput.Status = responseBP.Status
-    Set pOutput.CodigoTransp = responseBP.CodigoTransp
+    IF $$$ISOK(status) && $IsObject($Get(responseBP)) {
+    SET pOutput.Status = responseBP.Status
+    SET pOutput.CodigoTransp = responseBP.CodigoTransp
     
     // Converte de Horolog para DD/MM/YYYY (opcional)
-    If responseBP.DataPrevisaoEntrega '= "" {
-        Set pOutput.DataPrevisaoEntrega = $ZDATE(responseBP.DataPrevisaoEntrega, 4)
+    IF responseBP.DataPrevisaoEntrega '= "" {
+        SET pOutput.DataPrevisaoEntrega = $ZDATE(responseBP.DataPrevisaoEntrega, 4)
     }
 }
     
-    Quit status
+    QUIT status
 }
 
 }

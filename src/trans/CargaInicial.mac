@@ -64,15 +64,15 @@ InsertDestino(pCodigo, pCEPIni, pCEPFim, pPrazo)
     QUIT
     ;
 InsertPedido(pCodPedido, pDataPedido, pCodCliente, pValor, pPeso, pVolumes, pCodTransp, pDataPrev)
-    Set obj = ##class(TRE.DATA.Pedido).%New()
-    Set obj.CodigoPedido        = pCodPedido
-    Set obj.DataPedido          = pDataPedido
-    Set obj.CodigoCliente       = pCodCliente
-    Set obj.ValorPedido         = pValor
-    Set obj.PesoKG              = pPeso
-    Set obj.Volumes             = pVolumes
-    Set obj.CodigoTransportadora = pCodTransp
-    Set obj.DataPrevisaoEntrega = pDataPrev
-    Do obj.%Save()
-    Quit
+    SET obj = ##class(TRE.DATA.Pedido).%New()
+    SET obj.CodigoPedido        = pCodPedido
+    SET obj.DataPedido          = pDataPedido
+    SET obj.CodigoCliente       = pCodCliente
+    SET obj.ValorPedido         = pValor
+    SET obj.PesoKG              = pPeso
+    SET obj.Volumes             = pVolumes
+    SET obj.CodigoTransportadora = pCodTransp
+    SET obj.DataPrevisaoEntrega = pDataPrev
+    DO obj.%Save()
+    QUIT
     ;
