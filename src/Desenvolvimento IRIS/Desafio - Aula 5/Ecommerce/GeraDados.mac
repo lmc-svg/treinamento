@@ -1,0 +1,48 @@
+GeraDados ; 
+
+    // Limpa dados antigos
+    DO ##class(Ecommerce.Data.Cliente).%KillExtent()
+    DO ##class(Ecommerce.Data.ScoreCredito).%KillExtent()
+    
+    // 1. Popula Clientes
+    DO ..AddCliente("Leonardo", 25, "Masculino", 1)
+    DO ..AddCliente("Rodrigo", 43, "Masculino", 2)
+    DO ..AddCliente("Amanda", 34, "Feminino", 3)
+    DO ..AddCliente("Claudia", 27, "Feminino", 4)
+    
+    // 2. Popula ScoreCredito
+    DO ..AddScore(1, "AnaliseCredito", "Cadastral", 5)
+    DO ..AddScore(2, "AnaliseCredito", "Cadastral", 7)
+    DO ..AddScore(3, "AnaliseCredito", "Cadastral", 2)
+    DO ..AddScore(4, "AnaliseCredito", "Cadastral", 10)
+    
+    DO ..AddScore(1, "HistoricoPagamento", "Cadastral", 10)
+    DO ..AddScore(2, "HistoricoPagamento", "Cadastral", 3)
+    DO ..AddScore(3, "HistoricoPagamento", "Cadastral", 6)
+    DO ..AddScore(4, "HistoricoPagamento", "Cadastral", 8)
+    
+    DO ..AddScore(1, "ComportamentoCompra", "Comportamental", 7)
+    DO ..AddScore(2, "ComportamentoCompra", "Comportamental", 9)
+    DO ..AddScore(3, "ComportamentoCompra", "Comportamental", 4)
+    DO ..AddScore(4, "ComportamentoCompra", "Comportamental", 1)
+    
+    WRITE !, "Massa de dados criada com sucesso!"
+    QUIT
+
+AddCliente(pNome, pIdade, pSexo, pCodigo)
+    SET c = ##class(Ecommerce.Data.Cliente).%New()
+    SET c.Nome = pNome
+    SET c.Idade = pIdade
+    SET c.Sexo = pSexo
+    SET c.CodigoCliente = pCodigo
+    DO c.%Save()
+    QUIT
+
+AddScore(pCodigo, pIndicador, pTipo, pScore)
+    SET s = ##class(Ecommerce.Data.ScoreCredito).%New()
+    SET s.CodigoCliente = pCodigo
+    SET s.Indicador = pIndicador
+    SET s.TipoAvaliacao = pTipo
+    SET s.Score = pScore
+    DO s.%Save()
+    QUIT
